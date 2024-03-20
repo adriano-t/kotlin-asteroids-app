@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.network
 
-import com.udacity.asteroidradar.domain.PictureOfDay
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.http.Query
 import retrofit2.http.GET
 
@@ -10,10 +11,6 @@ interface NasaApiInterface {
         @Query("api_key") apiKey: String,
         @Query("start_date") start: String,
         @Query("end_date") end: String
-    ): String
+    ): ResponseBody
 
-    @GET("planetary/apod")
-    suspend fun getImageDay(
-        @Query("api_key") key: String
-    ): PictureOfDay
 }

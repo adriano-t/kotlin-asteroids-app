@@ -1,6 +1,6 @@
 package com.udacity.asteroidradar.database
 
-import AsteroidEntity
+
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase
 
 @Dao
 interface AsteroidDao {
-    @Query("SELECT * FROM asteroids_table ORDER BY miss_distance ASC")
+    @Query("SELECT * FROM asteroids_table ORDER BY distance_from_earth ASC")
     fun getAsteroids(): LiveData<List<AsteroidEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

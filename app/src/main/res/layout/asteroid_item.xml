@@ -9,9 +9,6 @@
         <variable
             name="asteroid"
             type="com.udacity.asteroidradar.domain.Asteroid" />
-        <variable
-            name="clickListener"
-            type="clic" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="TODO"
+            android:textColor="@color/default_text_color"
+            android:text="@{asteroid.codename}"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/item_distance"
             app:layout_constraintStart_toEndOf="@+id/item_icon"
@@ -45,7 +43,7 @@
             android:id="@+id/item_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TODO"
+            android:textColor="@color/default_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_name"
             app:layout_constraintTop_toBottomOf="@+id/item_name"

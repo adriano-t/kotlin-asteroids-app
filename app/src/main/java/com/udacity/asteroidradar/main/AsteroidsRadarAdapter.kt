@@ -35,6 +35,9 @@ class AsteroidsRadarAdapter (private val onClickListener: OnClickListener)
                 false -> R.drawable.ic_status_normal
             }
             binding.itemIcon.setImageResource(icon)
+
+            val format = binding.root.context.getString(R.string.astronomical_unit_format)
+            binding.itemDistance.text = String.format(format, asteroid.distanceFromEarth)
             binding.executePendingBindings()
         }
     }

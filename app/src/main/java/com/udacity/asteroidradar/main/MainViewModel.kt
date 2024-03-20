@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
+import android.os.Handler
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,9 +17,13 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
 
     init {
         viewModelScope.launch {
-            repository.refreshAsteroids()
+            val startDate = "2024-03-20"
+            val endDate = "2024-03-27"
+            repository.refreshAsteroids(startDate, endDate)
         }
     }
+
+    val asteroids = repository.asteroids
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
