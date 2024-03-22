@@ -1,14 +1,17 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import android.os.Handler
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidsRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MainViewModel(private val application: Application) : AndroidViewModel(application) {
 
@@ -17,9 +20,13 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
 
     init {
         viewModelScope.launch {
-            val startDate = "2024-03-20"
-            val endDate = "2024-03-27"
-            repository.refreshAsteroids(startDate, endDate)
+            val currentDate = Calendar.getInstance().time
+            val endDate = Calendar.getInstance()
+            endDate.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
+            val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+            val startDate = dateFormat.format(currentDate)
+            val formattedEndDate = dateFormat.format(endDate.time)
+            repository.refreshAsteroids(startDate, formattedEndDate)
         }
     }
 
