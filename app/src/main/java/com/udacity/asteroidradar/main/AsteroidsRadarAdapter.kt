@@ -36,10 +36,13 @@ class AsteroidsRadarAdapter (private val onClickListener: OnClickListener)
                 }
             )
 
-            binding.itemIcon.contentDescription = when(asteroid.isPotentiallyHazardous) {
-                true -> R.string.hazardous_asteroid
-                false -> R.string.not_hazardous_asteroid
-            }.toString()
+
+            binding.itemIcon.contentDescription =  binding.root.resources.getString(
+                when(asteroid.isPotentiallyHazardous) {
+                    true -> R.string.hazardous_asteroid
+                    false -> R.string.not_hazardous_asteroid
+                }
+            )
 
             val format = binding.root.context.getString(R.string.astronomical_unit_format)
             binding.itemDistance.text = String.format(format, asteroid.distanceFromEarth)

@@ -22,10 +22,10 @@ class DetailFragment : Fragment() {
 
         binding.asteroid = asteroid
 
-        binding.detailImageAsteroid.contentDescription = when(asteroid.isPotentiallyHazardous) {
+        binding.detailImageAsteroid.contentDescription = resources.getString(when(asteroid.isPotentiallyHazardous) {
             true -> R.string.hazardous_asteroid
             false -> R.string.not_hazardous_asteroid
-        }.toString()
+        })
 
         binding.helpButton.setOnClickListener {
             displayAstronomicalUnitExplanationDialog()
