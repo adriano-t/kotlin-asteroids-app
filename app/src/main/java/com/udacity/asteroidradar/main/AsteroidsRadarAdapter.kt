@@ -28,13 +28,18 @@ class AsteroidsRadarAdapter (private val onClickListener: OnClickListener)
         // bind the layout variables
         fun bind(asteroid: Asteroid) {
             binding.asteroid = asteroid
-            // TODO: forse? mettere il click listener nel layout
             // binding.clickListener = clickListener
-            val icon = when(asteroid.isPotentiallyHazardous) {
-                true -> R.drawable.ic_status_potentially_hazardous
-                false -> R.drawable.ic_status_normal
-            }
-            binding.itemIcon.setImageResource(icon)
+            binding.itemIcon.setImageResource(
+                when(asteroid.isPotentiallyHazardous) {
+                    true -> R.drawable.ic_status_potentially_hazardous
+                    false -> R.drawable.ic_status_normal
+                }
+            )
+
+            binding.itemIcon.contentDescription = when(asteroid.isPotentiallyHazardous) {
+                true -> R.string.hazardous_asteroid
+                false -> R.string.not_hazardous_asteroid
+            }.toString()
 
             val format = binding.root.context.getString(R.string.astronomical_unit_format)
             binding.itemDistance.text = String.format(format, asteroid.distanceFromEarth)
@@ -47,7 +52,7 @@ class AsteroidsRadarAdapter (private val onClickListener: OnClickListener)
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return AsteroidsViewHolder(AsteroidItemBinding.inflate(inflater))
+        return AsteroidsViewHolder(AsteroidItemBinding.inflate(inflater, parent, false))
     }
 
     /**

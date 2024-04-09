@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
@@ -27,6 +28,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater)
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -38,7 +40,6 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = adapter
         binding.asteroidRecycler.layoutManager = LinearLayoutManager(context)
 
-        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -54,14 +55,10 @@ class MainFragment : Fragment() {
         viewModel.asteroids.observe(viewLifecycleOwner) { asteroids ->
             adapter.submitList(asteroids)
         }
+        viewModel.pictureOfDay.observe(viewLifecycleOwner) {apod ->
+            Picasso.get().load(apod.url).into(binding.activityMainImageOfTheDay)
+            binding.activityMainImageOfTheDay.contentDescription = apod.explanation
+        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return true
-    }
 }
