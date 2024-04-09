@@ -23,6 +23,9 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
     private val repository = AsteroidsRepository(database)
 
     val asteroids = repository.asteroids
+    val asteroidsToday = repository.asteroidsToday
+    val asteroidsNextWeek = repository.asteroidsNextWeek
+
     val pictureOfDay = repository.pictureOfDay
 
 

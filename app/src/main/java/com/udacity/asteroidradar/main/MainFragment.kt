@@ -3,15 +3,15 @@ package com.udacity.asteroidradar.main
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
-import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.main.MainFragmentDirections
 
 class MainFragment : Fragment() {
 
@@ -39,6 +39,7 @@ class MainFragment : Fragment() {
         })
         binding.asteroidRecycler.adapter = adapter
         binding.asteroidRecycler.layoutManager = LinearLayoutManager(context)
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -52,13 +53,34 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.asteroids.observe(viewLifecycleOwner) { asteroids ->
-            adapter.submitList(asteroids)
-        }
+        showAsteroids(viewModel.asteroidsNextWeek)
+
         viewModel.pictureOfDay.observe(viewLifecycleOwner) {apod ->
             Picasso.get().load(apod.url).into(binding.activityMainImageOfTheDay)
             binding.activityMainImageOfTheDay.contentDescription = apod.explanation
         }
     }
+
+    private fun showAsteroids(asteroidsList: LiveData<List<Asteroid>>) {
+        asteroidsList.observe(viewLifecycleOwner) { asteroids ->
+            adapter.submitList(asteroids)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val asteroidsList = when (item.itemId) {
+            R.id.show_next_week_menu -> viewModel.asteroidsNextWeek
+            R.id.show_today_menu -> viewModel.asteroidsToday
+            else -> viewModel.asteroids
+        }
+        showAsteroids(asteroidsList)
+        return true
+    }
+
 
 }

@@ -13,6 +13,11 @@ import androidx.room.RoomDatabase
 
 @Dao
 interface AsteroidDao {
+    @Query("SELECT * FROM asteroids_table WHERE close_approach_date >= date('now') ORDER BY close_approach_date ASC")
+    fun getAsteroidsNextWeek(): LiveData<List<AsteroidEntity>>
+    @Query("SELECT * FROM asteroids_table WHERE close_approach_date == date('now') ORDER BY close_approach_date ASC")
+    fun getAsteroidsToday(): LiveData<List<AsteroidEntity>>
+
     @Query("SELECT * FROM asteroids_table ORDER BY close_approach_date ASC")
     fun getAsteroids(): LiveData<List<AsteroidEntity>>
 
