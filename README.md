@@ -29,10 +29,10 @@ This kind of app is one of the most usual in the real world, what you will learn
 
 ### Screenshots
 
-![Screenshot 1](screenshots/screen_1.jpg =250x)
-![Screenshot 2](screenshots/screen_2.png =250x)
-![Screenshot 3](screenshots/screen_3.png =250x)
-![Screenshot 4](screenshots/screen_4.png =250x)
+![Screenshot 1](screenshots/screen_1.jpg)
+![Screenshot 2](screenshots/screen_2.png)
+![Screenshot 3](screenshots/screen_3.png)
+![Screenshot 4](screenshots/screen_4.png)
 
 ## Built With
 
